@@ -1,24 +1,12 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "rgLocation": {
-        "type": "string",
-        "defaultValue": "Southeast Asia"
-      },
-      "rgName": {
-        "type": "string",
-        "defaultValue": "githubactionrg"
-      }
+    "type": "Microsoft.Resources/resourceGroups",
+    "apiVersion": "2021-04-01",
+    "name": "string",
+    "location": "string",
+    "tags": {
+      "tagName1": "tagValue1",
+      "tagName2": "tagValue2"
     },
-    "variables": {},
-    "resources": [
-      {
-        "type": "Microsoft.Resources/resourceGroups",
-        "apiVersion": "2018-05-01",
-        "location": "[parameters('rgLocation')]",
-        "name": "[parameters('rgName')]"
-      }
-    ],
-    "outputs": {}
+    "managedBy": "string",
+    "properties": {}
   }
