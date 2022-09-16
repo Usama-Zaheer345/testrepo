@@ -19,4 +19,11 @@ jobs:
             az account show
             az group list
             pwd 
-              
+
+      - name: 'Deploy ARM Template'
+        run: |
+            az deployment group create \
+            --name StorageAccountDeployment \
+            --resource-group githubactionspoc-rg \
+            --template-file storageaccount.json \
+            --parameters storageAccountType=Standard_GRS 
