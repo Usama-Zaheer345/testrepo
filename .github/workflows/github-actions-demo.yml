@@ -13,6 +13,10 @@ jobs:
 
       - name: Checkout source code
         uses: actions/checkout@v2
+      - name: Open Web Client Directory
+        working-directory: src/webclient
+        run: |
+          ls -la
 
       - name: Deploy ARM Template
         uses: azure/CLI@v1
