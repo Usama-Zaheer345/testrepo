@@ -21,6 +21,6 @@ jobs:
             az deployment group create \
             --name StorageAccountDeployment \
             --resource-group githubactionspoc-rg \
-            --template-file templates/rg.json \
+            --template-file storageaccount.json \
             --parameters storageAccountType=Standard_GRS
             
