@@ -19,8 +19,8 @@ jobs:
         with:
           inlineScript: |
             az deployment group create \
-            --name ResourceGroupDeployment \
-            --location East US \
-            --template-file templates/rg.json \
-            --parameters name=githubactionrg location=East US
+            --name StorageAccountDeployment \
+            --resource-group githubactionspoc-rg \
+            --template-file templates\rg.json \
+            --parameters storageAccountType=Standard_GRS
             
