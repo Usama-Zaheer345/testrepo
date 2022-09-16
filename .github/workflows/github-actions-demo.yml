@@ -22,8 +22,8 @@ jobs:
 
       - name: 'Deploy ARM Template'
         run: |
-            az deployment group create \
-            --name StorageAccountDeployment \
+          az deployment group create \
+            --name demoRGDeployment \
             --resource-group githubactionspoc-rg \
-            --template-file storageaccount.json \
-            --parameters storageAccountType=Standard_GRS 
+            --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
+            --parameters storageAccountType=Standard_GRS
