@@ -21,7 +21,7 @@ jobs:
             pwd
   deployDev:
     name: Deploy to dev
-    if: github.event_name == 'pull_request's
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     environment: 
       name: Development
