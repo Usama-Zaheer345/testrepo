@@ -1,24 +1,21 @@
-name: GitHub Actions Demo
-on: [push]
+name: CI + CD
+
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
     steps:
-
-
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: 'Run Azure CLI commands'
-        run: |
-            az account show
-            az group list
-            pwd
+      - uses: actions/checkout@v2
+      - name: Compile
+        run: echo Hello, world!
   deployDev:
     name: Deploy to dev
     if: github.event_name == 'pull_request'
@@ -27,6 +24,12 @@ jobs:
       name: Development
       url: 'http://dev.myapp.com'
     steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Checkout source code
+        uses: actions/checkout@v2
       - name: 'Deploy ARM Template'
         run: |
           az deployment group create \
@@ -42,6 +45,12 @@ jobs:
       name: Staging
       url: 'http://test.myapp.com'
     steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Checkout source code
+        uses: actions/checkout@v2
       - name: 'Deploy ARM Template'
         run: |
           az deployment group create \
