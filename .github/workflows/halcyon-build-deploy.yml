@@ -17,8 +17,7 @@ jobs:
       - name: Compile
         run: echo Hello, world!
   deployDev:
-    name: Deploy to dev
-    if: github.event_name == 'main'
+    name: Deploy to Dev
     runs-on: ubuntu-latest
     environment: 
       name: Development
