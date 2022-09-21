@@ -18,25 +18,14 @@ jobs:
         run: echo Hello, world!
   deployDev:
     name: Deploy to dev
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'main'
     runs-on: ubuntu-latest
     environment: 
       name: Development
       url: 'http://dev.myapp.com'
     steps:
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Checkout source code
-        uses: actions/checkout@v2
-      - name: 'Deploy ARM Template'
-        run: |
-          az deployment group create \
-            --name demoRGDeployment \
-            --resource-group githubactionspoc-rg \
-            --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
-            --parameters storageAccountType=Standard_GRS
+      - name: Deploy
+        run: echo I am deploying! 
   deployQA:
     name: Deploy to QA 
     needs: [deployDev]
@@ -47,20 +36,20 @@ jobs:
     steps:
       - name: Deploy
         run: echo I am deploying! 
+  # deployUAT:
+  #   name: Deploy to UAT 
+  #   needs: [deployQA]
+  #   runs-on: ubuntu-latest
+  #   environment: 
+  #     name: UAT
+  #     url: 'http://www.myapp.com'
+  #   steps:
+  #     - name: Deploy
+  #       run: echo I am deploying! 
+
   deployUAT:
     name: Deploy to UAT 
     needs: [deployQA]
-    runs-on: ubuntu-latest
-    environment: 
-      name: UAT
-      url: 'http://www.myapp.com'
-    steps:
-      - name: Deploy
-        run: echo I am deploying! 
-
-  deployStaging:
-    name: Deploy to Stagings
-    if: github.event.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: 
       name: Staging
@@ -72,16 +61,18 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Checkout source code
         uses: actions/checkout@v2
-      - name: 'Deploy ARM Template'
-        run: |
-          az deployment group create \
-            --name demoRGDeployment \
-            --resource-group githubactionspoc-rg \
-            --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
-            --parameters storageAccountType=Standard_GRS
+      # - name: 'Deploy ARM Template'
+      #   run: |
+      #     az deployment group create \
+      #       --name demoRGDeployment \
+      #       --resource-group githubactionspoc-rg \
+      #       --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
+      #       --parameters storageAccountType=Standard_GRS
+      - name: Deploy
+        run: echo I am deploying! 
   deployProd:
     name: Deploy to Production 
-    needs: [DeployStaging]
+    needs: [deployUAT]
     runs-on: ubuntu-latest
     environment: 
       name: Production
