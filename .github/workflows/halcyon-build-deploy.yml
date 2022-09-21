@@ -25,6 +25,19 @@ jobs:
     steps:
       - name: Deploy
         run: echo I am deploying! 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: 'Deploy ARM Template'
+        run: |
+          az deployment group create \
+            --name demoRGDeployment \
+            --resource-group githubactionspoc-rg \
+            --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
+            --parameters storageAccountType=Standard_GRS
   deployQA:
     name: Deploy to QA 
     needs: [deployDev]
@@ -35,6 +48,19 @@ jobs:
     steps:
       - name: Deploy
         run: echo I am deploying! 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: 'Deploy ARM Template'
+        run: |
+          az deployment group create \
+            --name demoRGDeployment \
+            --resource-group githubactionspoc-rg \
+            --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
+            --parameters storageAccountType=Standard_GRS
   # deployUAT:
   #   name: Deploy to UAT 
   #   needs: [deployQA]
@@ -60,13 +86,13 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Checkout source code
         uses: actions/checkout@v2
-      # - name: 'Deploy ARM Template'
-      #   run: |
-      #     az deployment group create \
-      #       --name demoRGDeployment \
-      #       --resource-group githubactionspoc-rg \
-      #       --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
-      #       --parameters storageAccountType=Standard_GRS
+      - name: 'Deploy ARM Template'
+        run: |
+          az deployment group create \
+            --name demoRGDeployment \
+            --resource-group githubactionspoc-rg \
+            --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
+            --parameters storageAccountType=Standard_GRS
       - name: Deploy
         run: echo I am deploying! 
   deployProd:
@@ -79,4 +105,17 @@ jobs:
     steps:
       - name: Deploy
         run: echo I am deploying! 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: 'Deploy ARM Template'
+        run: |
+          az deployment group create \
+            --name demoRGDeployment \
+            --resource-group githubactionspoc-rg \
+            --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json" \
+            --parameters storageAccountType=Standard_GRS
 
